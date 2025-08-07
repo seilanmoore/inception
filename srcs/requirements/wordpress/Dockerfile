@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-RUN apt update -y && apt upgrade && \
+RUN apt update -y && apt upgrade -y && \
 		apt install -y curl php7.4 php-fpm php-mysql mariadb-client && \
 		apt clean && rm -rf /var/lib/apt/lists/*
 

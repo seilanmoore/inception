@@ -47,13 +47,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/smoore-a/InceptionData/mariadb
+      device: /home/smoore-a/data/mariadb
       o: bind
   wordpress:
     driver: local
     driver_opts:
       type: none
-      device: /home/smoore-a/InceptionData/wordpress
+      device: /home/smoore-a/data/wordpress
       o: bind
 
 networks:
