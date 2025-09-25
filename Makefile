@@ -1,7 +1,6 @@
-COMPOSE= docker compose -f srcs/docker-compose.yml
+COMPOSE= docker-compose -f srcs/docker-compose.yml
 
-all:
-	$(COMPOSE) up -d --build
+all: build up
 
 build:
 	$(COMPOSE) build
@@ -10,21 +9,20 @@ up:
 	$(COMPOSE) up -d
 
 down:
-	$(COMPOSE) down
+	docker-compose -f srcs/docker-compose.yml down
 
-restart: down build up
+restart: down up
+
+fclean:
+	docker-compose -f srcs/docker-compose.yml down --volumes --rmi all
+
+	docker system prune -af
+
+	sudo rm -rf ${HOME}/InceptionData/mariadb/*	
+
+	sudo rm -rf ${HOME}/InceptionData/wordpress/*	
 
 logs:
 	$(COMPOSE) logs -f
 
-clean:
-	$(COMPOSE) down
-
-fclean: clean
-	sudo rm -rf $(HOME)/data/mariadb/*
-	sudo rm -rf $(HOME)/data/wordpress/*
-
-re: fclean all
-
-.PHONY: all clean fclean re up down build logs
-
+.PHONY: all up down build restart logs fclean

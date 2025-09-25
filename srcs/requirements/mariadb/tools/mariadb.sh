@@ -4,6 +4,9 @@ service mariadb start
 
 sleep 5
 
+MYSQL_PASSWORD=$(cat /run/secrets/db_password.txt)
+MYSQL_ROOT_PASSWORD=$(cat /run/secrets/db_root_password.txt)
+
 mysql -u root -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
 mysql -u root -e "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
 mysql -u root -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';"

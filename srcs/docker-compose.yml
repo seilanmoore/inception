@@ -8,6 +8,8 @@ services:
     env_file: .env
     volumes:
       - mariadb:/var/lib/mysql
+      - ../secrets/db_password.txt:/run/secrets/db_password.txt:ro
+      - ../secrets/db_root_password.txt:/run/secrets/db_root_password.txt:ro
     restart: always
     expose:
       - "3306"
@@ -18,7 +20,12 @@ services:
       - inception
     depends_on:
       - wordpress
-    build: ./requirements/nginx
+    build:
+      context: ./requirements/nginx
+      args:
+        DOMAIN_NAME: ${DOMAIN_NAME}
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
     image: nginx:notlatest
     env_file: .env
     volumes:
@@ -38,6 +45,9 @@ services:
     env_file: .env
     volumes:
       - wordpress:/var/www/wordpress
+      - ../secrets/wp_password.txt:/run/secrets/wp_password.txt:ro
+      - ../secrets/wp_admin_password.txt:/run/secrets/wp_admin_password.txt:ro
+      - ../secrets/db_password.txt:/run/secrets/db_password.txt:ro
     restart: always
     expose:
       - "9000"
@@ -47,13 +57,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/smoore-a/data/mariadb
+      device: /home/smoore-a/InceptionData/mariadb
       o: bind
   wordpress:
     driver: local
     driver_opts:
       type: none
-      device: /home/smoore-a/data/wordpress
+      device: /home/smoore-a/InceptionData/wordpress
       o: bind
 
 networks:

@@ -1,7 +1,10 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 RUN apt update -y && apt upgrade -y && \
-    apt install -y nginx openssl
+    apt install -y nginx openssl gettext && \
+    apt clean && rm -rf /var/lib/apt/lists/*
+
+ARG DOMAIN_NAME
 
 RUN mkdir -p /etc/nginx/ssl && \
     openssl req -x509 -nodes \
@@ -11,9 +14,12 @@ RUN mkdir -p /etc/nginx/ssl && \
     -subj "/CN=${DOMAIN_NAME}"
 
 RUN mkdir -p /var/www/wordpress /var/run/nginx && \
-    chmod 755 /var/www/wordpress && \
-    chown -R www-data:www-data /var/www/wordpress
-
+chmod 755 /var/www/wordpress && \
+chown -R www-data:www-data /var/www/wordpress
+    
 COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY tools/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
