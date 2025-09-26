@@ -9,7 +9,7 @@ up:
 	$(COMPOSE) up -d
 
 down:
-	docker-compose -f srcs/docker-compose.yml down
+	$(COMPOSE) down
 
 restart: down up
 

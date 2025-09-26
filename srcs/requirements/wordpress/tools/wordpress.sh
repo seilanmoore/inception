@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -eu
+
 MYSQL_PASSWORD=$(cat /run/secrets/db_password.txt)
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password.txt)
 WP_USER_PASSWORD=$(cat /run/secrets/wp_password.txt)

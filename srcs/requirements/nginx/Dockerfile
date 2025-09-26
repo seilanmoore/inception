@@ -18,8 +18,8 @@ chmod 755 /var/www/wordpress && \
 chown -R www-data:www-data /var/www/wordpress
     
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-COPY tools/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY tools/nginx.sh /usr/local/bin/nginx.sh
+RUN chmod +x /usr/local/bin/nginx.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/nginx.sh"]
 CMD ["nginx", "-g", "daemon off;"]

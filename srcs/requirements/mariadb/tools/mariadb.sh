@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eu
+
 service mariadb start
 
 sleep 5
