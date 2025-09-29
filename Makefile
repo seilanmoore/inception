@@ -18,9 +18,9 @@ fclean:
 
 	docker system prune -af
 
-	sudo rm -rf ${HOME}/InceptionData/mariadb/*	
+	sudo rm -rf ${HOME}/data/mariadb/*	
 
-	sudo rm -rf ${HOME}/InceptionData/wordpress/*	
+	sudo rm -rf ${HOME}/data/wordpress/*	
 
 logs:
 	$(COMPOSE) logs -f
