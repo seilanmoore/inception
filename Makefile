@@ -14,7 +14,7 @@ down:
 restart: down up
 
 fclean:
-	docker-compose -f srcs/docker-compose.yml down --volumes --rmi all
+	$(COMPOSE) down --volumes --rmi all
 
 	docker system prune -af
 

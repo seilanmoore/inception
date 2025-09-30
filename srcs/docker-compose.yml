@@ -5,6 +5,7 @@ services:
       - inception
     build: ./requirements/mariadb
     image: mariadb:notlatest
+    init: true
     env_file: .env
     volumes:
       - mariadb:/var/lib/mysql
@@ -27,6 +28,7 @@ services:
     environment:
       - DOMAIN_NAME=${DOMAIN_NAME}
     image: nginx:notlatest
+    init: true
     env_file: .env
     volumes:
       - wordpress:/var/www/wordpress
@@ -42,6 +44,7 @@ services:
       - mariadb
     build: ./requirements/wordpress
     image: wordpress:notlatest
+    init: true
     env_file: .env
     volumes:
       - wordpress:/var/www/wordpress
